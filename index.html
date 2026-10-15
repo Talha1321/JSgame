@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird</title>
+</head>
+<body>
+    <script src="https://unpkg.com/kaplay@3001.0.19/dist/kaplay.js"></script>
+
+    <form id="idScores">
+<ul>    
+    <li>id: <input id="matchId" type="number"></li>
+    <li>Naam: <input id="playerName" type="text"></li>
+    <li>score: <input id="score" type="number"></li>
+    <li>tijd: <input id="time" type="number"></li>
+
+    <button type="button" onclick="submitForm()">Verstuur score</button>
+</ul>
+</form>
+<script>
+function submitForm() {
+    var formData = {
+        playerName: $('#playerName').val(),
+        score: $('#score').val(),
+        time: $('#time').val(),
+        matchId: $('#matchId').val()
+    };
+
+    $.ajax({
+        url: 'submit_score.php',
+        method: 'POST',
+        data: formData
+    })
+    .done(function(msg){
+        alert("Score Saved: " + msg);
+    });
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</body>
+</html>
