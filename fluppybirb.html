@@ -147,26 +147,5 @@ onLoad(() => go("game"));
 go("game");
 
     </script>
-<script>
-function submitForm(playerName, score, time, matchId) {
-    $.ajax({
-        url: 'submit_score.php',
-        method: 'POST',
-        data: {
-            playerName: playerName,
-            score: score,
-            time: time,
-            matchId: matchId
-        }
-    })
-    .done(function(msg) {
-        console.log("Score opgeslagen: " + msg);
-    })
-    .fail(function() {
-        console.log("De score kon niet worden opgeslagen.");
-    });
-}
-</script>
-
 </body>
 </html>

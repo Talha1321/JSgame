@@ -1,16 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ontvang de gegevens uit het spel
+    $playerName = trim($_POST['playerName'] ?? '');
+    $score      = filter_input(INPUT_POST, 'score', FILTER_VALIDATE_INT);
+    $time       = trim($_POST['time'] ?? '');
+    $matchId    = trim($_POST['matchId'] ?? '');
 
-    // Haal de gegevens op uit het POST-verzoek
-    $playerName = isset($_POST['playerName']) ? htmlspecialchars($_POST['playerName']) : '';
-    $score      = isset($_POST['score']) ? htmlspecialchars($_POST['score']) : '';
-    $time       = isset($_POST['time']) ? htmlspecialchars($_POST['time']) : '';
-    $matchId    = isset($_POST['matchId']) ? htmlspecialchars($_POST['matchId']) : '';
-
-    // Basisvalidatie
-    if (!empty($playerName) && !empty($score)) {
-
-        // Bouw een array met de ingevoerde gegevens
+    // Controleer of de naam en score geldig zijn
+    if ($playerName !== '' && $score !== false && $score !== null) {
         $formData = array(
             'playerName'   => $playerName,
             'score'        => $score,
@@ -19,35 +16,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'submitted_at' => date('Y-m-d H:i:s')
         );
 
-        // JSON-bestand
+        // Bestand waarin de scores worden opgeslagen
         $filePath = 'scores.json';
 
-        // Lees bestaande gegevens uit JSON-bestand
+        // Lees bestaande scores
         if (file_exists($filePath)) {
             $jsonData = file_get_contents($filePath);
             $dataArray = json_decode($jsonData, true);
+
+            if (!is_array($dataArray)) {
+                $dataArray = array();
+            }
         } else {
             $dataArray = array();
         }
 
-        // Voeg nieuwe gegevens toe
+        // Voeg de nieuwe score toe
         $dataArray[] = $formData;
 
-        // Converteer array naar JSON
+        // Zet de gegevens om naar JSON
         $jsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
 
-        // Sla op
-        if (file_put_contents($filePath, $jsonData)) {
+        // Sla de scores op
+        if (file_put_contents($filePath, $jsonData) !== false) {
             echo "Score succesvol opgeslagen!";
         } else {
+            http_response_code(500);
             echo "Fout bij opslaan.";
         }
-
     } else {
-        echo "Ongeldige invoer, zorg dat alle velden correct zijn.";
+        http_response_code(400);
+        echo "Ongeldige invoer.";
     }
-
 } else {
+    http_response_code(405);
     echo "Verkeerde verzoeksmethode.";
 }
 ?>
+
