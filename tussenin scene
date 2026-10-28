@@ -2,7 +2,6 @@ loadBitmapFont("happy", "/fonts/happy_28x36.png", 28, 36);
 loadBitmapFont("happy-o", "/fonts/happy-o_36x45.png", 36, 45);
 
 scene("tussenin", () => {
-
     const nameField = add([
         text("enter name", {
             size: 24,
@@ -22,5 +21,4 @@ scene("tussenin", () => {
         onKeyPress("space", () => NextScene());
         onMousePress(() => NextScene());
     });
-
 });
