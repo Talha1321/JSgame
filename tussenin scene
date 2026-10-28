@@ -1,0 +1,26 @@
+loadBitmapFont("happy", "/fonts/happy_28x36.png", 28, 36);
+loadBitmapFont("happy-o", "/fonts/happy-o_36x45.png", 36, 45);
+
+scene("tussenin", () => {
+
+    const nameField = add([
+        text("enter name", {
+            size: 24,
+            width: 800,
+            align: "center",
+        }),
+        textInput(true),
+        pos(width() / 4 - 200, height() / 2.2),
+    ]);
+
+    function NextScene() {
+        globalThis.name = nameField.text;
+        go("game");
+    }
+
+    wait(0.2, () => {
+        onKeyPress("space", () => NextScene());
+        onMousePress(() => NextScene());
+    });
+
+});
