@@ -1,0 +1,25 @@
+loadSprite("bean", "/sprites/bean.png");
+loadBitmapFont("happy", "/fonts/happy_28x36.png", 28, 36);
+loadBitmapFont("happy-o", "/fonts/happy-o_36x45.png", 36, 45);
+
+scene("beginscherm", () => {
+    add([
+        sprite("bean"),
+        pos(width() / 2, height() / 2 - 108),
+        scale(3),
+        anchor("center"),
+    ]);
+
+    add([
+        text("Fluppy birb", { font: "happy-o" }),
+        pos(width() / 2, height() / 2 + 108),
+        scale(3),
+        anchor("center"),
+    ]);
+
+    wait(0.2, () => {
+        onKeyPress("space", () => go("game"));
+        onMousePress(() => go("game"));
+    });
+
+});
