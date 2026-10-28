@@ -1,7 +1,10 @@
-{
-    "playerId": 1,
-    "playerName": "Marc",
-    "score": 12,
-    "playTime": 35,
-    "matchId": "match-001"
-}
+[
+  {
+    "name": "marc",
+    "score": 32
+  },
+  {
+    "name": "marc",
+    "score": 2
+  }
+]
